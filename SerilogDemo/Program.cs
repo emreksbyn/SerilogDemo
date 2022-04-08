@@ -1,10 +1,8 @@
-using Example.Logging;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Core;
-using Serilog.Formatting;
 using System.IO;
 
 namespace SerilogDemo
@@ -17,10 +15,15 @@ namespace SerilogDemo
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .Build();
-            //Logger logger = new LoggerConfiguration()
-            //    .ReadFrom.Configuration(configuration, sectionName: "CustomSection")
+            Logger logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration, sectionName: "CustomSection")
+                .CreateLogger();
+            logger.Information("Start");
+
+            //Log.Logger = new LoggerConfiguration()
+            //    .MinimumLevel.Information()
+            //    .WriteTo.File("./Logs/log.txt")
             //    .CreateLogger();
-            //logger.Information("Start");
 
             //Log.Logger = new LoggerConfiguration()
             //    .ReadFrom.Configuration(configuration,sectionName:"CustomSection")
@@ -38,7 +41,7 @@ namespace SerilogDemo
                 {
                     webBuilder.UseStartup<Startup>();
                 })
-                .UseSerilog((hostingContext, loggerConfiguration)=>
+                .UseSerilog((hostingContext, loggerConfiguration) =>
                 {
                     loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration);
                 });

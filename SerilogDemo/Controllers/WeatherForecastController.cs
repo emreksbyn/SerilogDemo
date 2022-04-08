@@ -36,7 +36,7 @@ namespace SerilogDemo.Controllers
             .ToArray();
         }
 
-        [HttpPost]
+        [HttpPost("post")]
         public IActionResult Post([FromBody]int id)
         {
             return Ok(id);
