@@ -5,13 +5,13 @@ using System.IO;
 
 namespace Example.Logging
 {
-    public static class Logger
+    public static class MyLogger
     {
         public static void CreateLogger()
         {
             IConfiguration configuration = new ConfigurationBuilder()
               .SetBasePath(Directory.GetCurrentDirectory())
-              .AddJsonFile("loggingSettings.json")
+              .AddJsonFile("appsettings.json")
               .Build();
 
             Log.Logger = new LoggerConfiguration()

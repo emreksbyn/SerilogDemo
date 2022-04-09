@@ -1,3 +1,4 @@
+using Example.Logging;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -12,15 +13,7 @@ namespace SerilogDemo
     {
         public static void Main(string[] args)
         {
-            //IConfigurationRoot configuration = new ConfigurationBuilder()
-            //    .SetBasePath(Directory.GetCurrentDirectory())
-            //    .AddJsonFile("appsettings.json")
-            //    .Build();
-          
-            //Log.Logger = new LoggerConfiguration()
-            //    .ReadFrom.Configuration(configuration)
-            //    .WriteTo.File(new CompactJsonFormatter(), configuration.GetSection("Serilog:WriteTo:0:Args:path").Value)
-            //    .CreateLogger();
+            MyLogger.CreateLogger();
 
             CreateHostBuilder(args).Build().Run();
         }
@@ -31,9 +24,6 @@ namespace SerilogDemo
                 {
                     webBuilder.UseStartup<Startup>();
                 })
-                .UseSerilog((hostingContext, loggerConfiguration) =>
-                {
-                    loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration);
-                });
+                .UseSerilog();
     }
 }
