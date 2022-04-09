@@ -13,8 +13,4 @@
     <ProjectReference Include="..\Example.Logging\Example.Logging.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Logs\" />
-  </ItemGroup>
-
 </Project>
