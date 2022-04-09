@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SerilogDemo.Controllers
 {
@@ -11,10 +11,22 @@ namespace SerilogDemo.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
+        private readonly ILogger<WeatherForecastController> _logger;
+
+        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        {
+            this._logger = logger;
+        }
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
+
+        [HttpGet]
+        public void Index()
+        {
+            _logger.LogInformation("Index tetiklendi");
+        }
 
         [HttpGet("get")]
         public IEnumerable<WeatherForecast> Get()
@@ -32,6 +44,7 @@ namespace SerilogDemo.Controllers
         [HttpPost("post")]
         public IActionResult Post([FromBody]int id)
         {
+            _logger.LogWarning("Dikkat!!!");
             return Ok(id);
         }
     }
