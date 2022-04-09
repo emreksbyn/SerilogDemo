@@ -12,26 +12,15 @@ namespace SerilogDemo
     {
         public static void Main(string[] args)
         {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
-                .Build();
-            //Logger logger = new LoggerConfiguration()
-            //    .ReadFrom.Configuration(configuration, sectionName: "CustomSection")
-            //    .CreateLogger();
-            //logger.Information("Start");
-
+            //IConfigurationRoot configuration = new ConfigurationBuilder()
+            //    .SetBasePath(Directory.GetCurrentDirectory())
+            //    .AddJsonFile("appsettings.json")
+            //    .Build();
+          
             //Log.Logger = new LoggerConfiguration()
-            //    .MinimumLevel.Information()
-            //    .WriteTo.File("./Logs/log.txt")
+            //    .ReadFrom.Configuration(configuration)
+            //    .WriteTo.File(new CompactJsonFormatter(), configuration.GetSection("Serilog:WriteTo:0:Args:path").Value)
             //    .CreateLogger();
-
-            Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(configuration)
-                .WriteTo.File(new CompactJsonFormatter(), configuration.GetSection("Serilog:WriteTo:0:Args:path").Value)
-                .CreateLogger();
-
-
 
             CreateHostBuilder(args).Build().Run();
         }
