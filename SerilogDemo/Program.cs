@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Core;
+using Serilog.Formatting.Compact;
 using System.IO;
 
 namespace SerilogDemo
@@ -15,20 +16,20 @@ namespace SerilogDemo
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .Build();
-            Logger logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(configuration, sectionName: "CustomSection")
-                .CreateLogger();
-            logger.Information("Start");
+            //Logger logger = new LoggerConfiguration()
+            //    .ReadFrom.Configuration(configuration, sectionName: "CustomSection")
+            //    .CreateLogger();
+            //logger.Information("Start");
 
             //Log.Logger = new LoggerConfiguration()
             //    .MinimumLevel.Information()
             //    .WriteTo.File("./Logs/log.txt")
             //    .CreateLogger();
 
-            //Log.Logger = new LoggerConfiguration()
-            //    .ReadFrom.Configuration(configuration,sectionName:"CustomSection")
-            //    .WriteTo.File(new JsonFormatter(), "./Logs/mylogs.json")
-            //    .CreateLogger();
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                .WriteTo.File(new CompactJsonFormatter(), configuration.GetSection("Serilog:WriteTo:0:Args:path").Value)
+                .CreateLogger();
 
 
 
